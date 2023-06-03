@@ -1,0 +1,154 @@
+.games{
+    margin-left: 15%;
+    background-image: url(../../Globle_component/images/bgwp.jpg);
+    height: 100vh;
+}
+
+.games-container{
+    margin-left: 50px;
+}
+
+.games-topic{
+    margin-bottom: 20px;
+}
+
+.games-topic h1{
+    font-weight: bold;
+}
+
+.games-btn{
+    font-size: 18px;
+    background: #0020eb;
+    margin-bottom: 25px;
+    width: 160px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(15, 209, 216, 0.1);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;
+    padding: 5px;
+}
+
+.games-form-style{
+    font: 95% Arial, Helvetica, sans-serif;
+	max-width: 400px;
+	margin: 10px auto;
+	padding: 16px;
+	background: #f2f6fc;
+    border-radius: 5px; 
+}
+
+.games-form-style h1{
+    background: #43D1AF;
+	padding: 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
+	margin: -16px -16px 16px -16px;
+    border-radius: 5px; 
+}
+
+.games-form-style input[type="text"],
+.games-form-style input[type="date"],
+.games-form-style input[type="datetime"],
+.games-form-style input[type="email"],
+.games-form-style input[type="number"],
+.games-form-style input[type="search"],
+.games-form-style input[type="time"],
+.games-form-style input[type="url"],
+.games-form-style textarea,
+.games-form-style select 
+{
+    -webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+
+.games-form-style input[type="text"]:focus,
+.games-form-style input[type="date"]:focus,
+.games-form-style input[type="datetime"]:focus,
+.games-form-style input[type="email"]:focus,
+.games-form-style input[type="number"]:focus,
+.games-form-style input[type="search"]:focus,
+.games-form-style input[type="time"]:focus,
+.games-form-style input[type="url"]:focus,
+.games-form-style textarea:focus,
+.games-form-style select:focus
+{
+	box-shadow: 0 0 5px #43D1AF;
+	padding: 3%;
+	border: 1px solid #43D1AF;
+}
+
+.games-form-style input[type="submit"],
+.games-form-style input[type="button"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 3%;
+	background: #43D1AF;
+	border-bottom: 2px solid #30C29E;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;	
+	color: #fff;
+    border-radius: 5px;
+}
+.games-form-style input[type="submit"]:hover,
+.games-form-style input[type="button"]:hover{
+	background: #2EBC99;
+}
+
+.games-table{
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 7%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* background-color: #2e2e36; */
+    background-color: #f7f9fc;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.games-table th, td{
+    padding: 8px;
+}
+
+.games-table th{
+    /* background-color: #19181d; */
+    background-color: #b9c9fd;
+}
+
+.games-table tr:nth-child(even){
+    /* background-color: #26252b; */
+    background-color: #e5eafe;
+}
+
+.delete-games{
+    background-color: #da0000;
+    padding: 3px;
+    color: #fff;
+    border-radius: 5px;
+}

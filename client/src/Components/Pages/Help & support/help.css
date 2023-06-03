@@ -1,0 +1,46 @@
+.help{
+    margin-left: 15%;
+    background-image: url(../../Globle_component/images/bgwp.jpg);
+    height: 100vh;
+}
+
+.help-container{
+    margin-left: 50px;
+}
+
+.help-topic{
+    margin-bottom: 20px;
+}
+
+.help-topic h1{
+    font-weight: bold;
+}
+
+.box-column-hs{
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.box-hs{
+    width: 80%;
+    height: auto;
+    background-color: #f2f6fc;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.box-hs h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+.box-hs p {
+    margin-bottom: 0;
+  }
