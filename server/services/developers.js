@@ -18,6 +18,52 @@ const user_data_id = req.params.devId;
     res.send(gamelist);
 }
 
+exports.getWithdrawals = async function (req, res) {
+    const developerRef = await collectionList.developerCollection.doc(req.params.devId).get();
+    const trans_ids = developerRef.data().transactions;
+
+    const translist = [];
+
+    for (const trans_id of trans_ids) {
+        const transRef = await collectionList.transactionCollection.doc(trans_id).get();
+        // console.log(gameRef.data())
+        const game_data = transRef.data();
+        game_data.trans_id = transRef.id;
+        translist.push( game_data);
+    }
+    // gamelist.sort((a,b) => a.rank - b.rank);
+    // console.log(translist);
+    res.send(translist);
+}
+
+exports.getadUnits = async function (req, res) {
+    const developerRef = await collectionList.developerCollection.doc(req.params.devId).get();
+    const game_ids = developerRef.data().games;
+
+    const addUnitlist = [];
+
+    for (const game_id of game_ids) {
+        const gameRef = await collectionList.gameCollection.doc(game_id).get();
+        // console.log(gameRef.data().ad_units)
+        addUnitlist.push( ...gameRef.data().ad_units);
+    }
+
+    const a = await Promise.all(addUnitlist.map(async (elem) => {
+        const result = await collectionList.adUnitCollection.doc(elem).get();
+        let data = result.data();
+        data.id = result.id;
+        return data;
+      }));
+      
+      // Process the `a` array here
+      
+    // gamelist.sort((a,b) => a.rank - b.rank);
+    // console.log(a);
+    res.send(a);
+}
+
+
+
 // exports.getWithdrawals = function (devId) {
 
 //         const income = await db.collection("AdUnitCollection").get();

@@ -87,39 +87,39 @@ async function get_games(user_data_id) {
 
 module.exports = async function get_revenue(req, res) {
 
-  const { user_id } = req.body; //3Asj4ijVZGTgTWZpt6PO
+  const { dev_id } = req.body; //3Asj4ijVZGTgTWZpt6PO
 
   try {
 
-    const userCollection = await collectionList.userCollection.get();
-    const user_revenue_list = await Promise.all(
-      userCollection.docs
-        .filter((doc) => doc.id === user_id)
-        .map(async (doc, index) => {
-          const data = doc.data();
-          //console.log(data);
-          const games = await get_games(data.user_data_id);
-          const revenue = await get_revenue_from_devs(games);
+    // const userCollection = await collectionList.userCollection.get();
+    // const user_revenue_list = await Promise.all(
+    //   userCollection.docs
+    //     .filter((doc) => doc.id === user_id)
+    //     .map(async (doc, index) => {
+    //       const data = doc.data();
+    //console.log(data);
+    const games = await get_games(dev_id);
+    const revenue = await get_revenue_from_devs(games);
 
-          return {
-            id: doc.id,
-            username: data.username,
-            profile: data.profile,
-            email: data.email,
-            daily_revenue: revenue.daily.toFixed(2),
-            weekly_revenue: revenue.weekly.toFixed(2),
-            monthly_revenue: revenue.monthly.toFixed(2),
-            daily_views: revenue.daily_views,
-            weekly_views: revenue.weekly_views,
-            monthly_views: revenue.monthly_views,
-            mostReveAd: revenue.mostReveAd,
-            nAds: revenue.nAds
+    const obj = {
+      id: dev_id,
+      // username: data.username,
+      // profile: data.profile,
+      // email: data.email,
+      daily_revenue: revenue.daily.toFixed(2),
+      weekly_revenue: revenue.weekly.toFixed(2),
+      monthly_revenue: revenue.monthly.toFixed(2),
+      daily_views: revenue.daily_views,
+      weekly_views: revenue.weekly_views,
+      monthly_views: revenue.monthly_views,
+      mostReveAd: revenue.mostReveAd,
+      nAds: revenue.nAds
 
-          };
-        })
-    );
-    // console.log(user_revenue_list)
-    res.send(user_revenue_list);
+    };
+    // })
+    // );
+    // console.log(obj)
+    res.send(obj);
 
   } catch (error) {
     console.error(error);

@@ -24,7 +24,7 @@ export default function Games() {
 
   const [reload, setReload] = useState(false);
 
-  const devId = "3yyBzU23QUwAXU2mdh51";
+  const devId = "1qpo3PJy3826ycgCBwzv";
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
@@ -36,11 +36,15 @@ export default function Games() {
   const [popupActive, setPopupActive] = useState(false);
 
   const [form, setForm] = useState({
-    Status: "",
-    Name: "",
-    Owner_ID: "",
-    Platform: "",
+    ad_cost_rate: 0,
+    ad_units: ["ddd", "ddd"],
+    game_icon: "dddd",
+    game_name: "ddd",
+    game_type: "ddd",
+    platform: "dddd",
+    published_date: "dddd",
     rank: 0,
+    status: "dd"
   });
 
   const handleSubmit = (e) => {
@@ -58,16 +62,26 @@ export default function Games() {
     }
 
     // addDoc(gameDataCollectionRef, form);
-
     axios
-      .put("http://localhost:8000/api/games/1D7haD1qnqmbxvkLaqNX", {
-        Status: form.Status,
-        ad_cost_rate: 2.5,
-        game_icon: "",
-        game_name: form.Name,
-        game_type: "93FrWQCWdWqUDMNhp1eM",
-        platform: form.Platform,
+      .put("http://localhost:8000/api/games/8q4GBpvMsuvRnhqYYrQl", {
+        // ad_cost_rate: 2.5,
+        // ad_units: ["Hit22IjjmV2BrF6tiYFG", "niSBRhPkYVxTpwh9oAhI", "PFt9OEPOHXHrjam10sZT"],
+        // game_icon: "sssss",
+        // game_name: "Test Game",
+        // game_type: "oEZRAx7BGkAbZsRuLC7q",
+        // platform: "Ios",
+        // published_date: "June 3, 2023 at 6:52:18 PM UTC+5:30",
+        // rank: 19,
+        // status: "approved"
+        ad_cost_rate: form.ad_cost_rate,
+        ad_units: form.ad_units,
+        game_icon: form.game_icon,
+        game_name: form.name,
+        game_type: form.type,
+        platform: form.platform,
+        published_date: form.published_date,
         rank: form.rank,
+        status: form.status
       })
       .then((response) => {
         setReload((x) => !x);
@@ -77,11 +91,15 @@ export default function Games() {
       });
 
     setForm({
-      Status: "",
-      Name: "",
-      Owner_ID: "",
-      Platform: "",
+      ad_cost_rate: 0,
+      ad_units: [],
+      game_icon: "",
+      game_name: "",
+      game_type: "",
+      platform: "",
+      published_date: "",
       rank: 0,
+      status: ""
     });
 
     setPopupActive(false);
@@ -134,7 +152,7 @@ export default function Games() {
                   value={form.Name}
                   name="field1"
                   placeholder="Name"
-                  onChange={(e) => setForm({ ...form, Name: e.target.value })}
+                  onChange={(e) => setForm({ ...form, game_name: e.target.value })}
                 />
 
                 <input

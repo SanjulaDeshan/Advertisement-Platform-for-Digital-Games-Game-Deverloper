@@ -1,5 +1,6 @@
-import { React, useEffect, useState }  from "react";
+import { React, useEffect, useState } from "react";
 import './adUnit.css'
+import axios from "axios";
 
 //Import globle component
 import Navbar from '../../Globle_component/Navbar'
@@ -12,20 +13,26 @@ import { db } from "../../../firebase.config";
 
 export default function AdUnit() {
 
+  const devId = "1qpo3PJy3826ycgCBwzv";
   const [adUnitDetails, setAdUnitDetails] = useState([]);
   const adUnitCollectionRef = collection(db, "AdUnitCollection");
 
   useEffect(() => {
-    onSnapshot(adUnitCollectionRef, (snapshot) => {
-      setAdUnitDetails(
-        snapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            viewng: false,
-            ...doc.data(),
-          };
-        })
-      );
+    // onSnapshot(adUnitCollectionRef, (snapshot) => {
+    //   setAdUnitDetails(
+    //     snapshot.docs.map((doc) => {
+    //       return {
+    //         id: doc.id,
+    //         viewng: false,
+    //         ...doc.data(),
+    //       };
+    //     })
+    //   );
+    // });
+
+    axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+      setAdUnitDetails(x.data);
+      console.log(x.data);
     });
   }, []);
 
@@ -47,7 +54,7 @@ export default function AdUnit() {
     if (
       !form.AdUnit_Name ||
       !form.AdUnit_Type ||
-      !form.Game_Id 
+      !form.Game_Id
     ) {
       alert("Please fill out all fields")
       return
@@ -84,41 +91,41 @@ export default function AdUnit() {
         {popupActive && <div className="popup">
           <div class="ad-unit-form-style">
             <h1>Adding AdUnit</h1>
-            
+
             {/* https://www.sanwebe.com/2014/08/css-html-forms-designs */}
 
             <form onSubmit={handleSubmit}>
-              
-              <input 
-                type="text" 
-                value={form.AdUnit_Name} 
-                name="field1" 
+
+              <input
+                type="text"
+                value={form.AdUnit_Name}
+                name="field1"
                 placeholder="Ad unit name"
-                onChange={e => setForm({...form, AdUnit_Name: e.target.value})} 
+                onChange={e => setForm({ ...form, AdUnit_Name: e.target.value })}
               />
 
 
-              <input 
-                type="text" 
-                value={form.AdUnit_Type} 
-                name="field2" 
-                placeholder="Type of the ad unit" 
-                onChange={e => setForm({...form, AdUnit_Type: e.target.value})} 
+              <input
+                type="text"
+                value={form.AdUnit_Type}
+                name="field2"
+                placeholder="Type of the ad unit"
+                onChange={e => setForm({ ...form, AdUnit_Type: e.target.value })}
               />
 
 
-              <input 
-                type="text" 
-                value={form.Game_Id} 
-                name="field3" 
-                placeholder="Game ID" 
-                onChange={e => setForm({...form, Game_Id: e.target.value})} 
+              <input
+                type="text"
+                value={form.Game_Id}
+                name="field3"
+                placeholder="Game ID"
+                onChange={e => setForm({ ...form, Game_Id: e.target.value })}
               />
 
 
-              <input 
-                type="submit" 
-                value="Submit" 
+              <input
+                type="submit"
+                value="Submit"
               />
 
             </form>
@@ -126,25 +133,25 @@ export default function AdUnit() {
         </div>}
 
         <table className="ad-unit-table">
-            <tr>
-              <th>Ad unit Name</th>
-              <th>Ad unit Type</th>
-              <th>Ad unit ID</th>
-              <th>Delete Ad unit</th>
+          <tr>
+            <th>Ad unit Name</th>
+            <th>Ad unit Type</th>
+            <th>Ad unit ID</th>
+            <th>Delete Ad unit</th>
+          </tr>
+          {adUnitDetails.map((adUnitData, i) => (
+            <tr key={i}>
+              <td>{adUnitData.ad_unit_name}</td>
+              <td>{adUnitData.ad_unit_type}</td>
+              <td>{adUnitData.id}</td>
+              <td> <button className="delete-adunit" onClick={() => removeData(adUnitData.id)}>Delete</button> </td>
             </tr>
-            {adUnitDetails.map((adUnitData, i) => (
-              <tr key={i}>
-                <td>{adUnitData.AdUnit_Name}</td>
-                <td>{adUnitData.AdUnit_Type}</td>
-                <td>{adUnitData.id}</td>
-                <td> <button className="delete-adunit" onClick={()=> removeData(adUnitData.id)}>Delete</button> </td>
-              </tr>
-            ))}
+          ))}
         </table>
 
 
       </div>
-        
+
     </div>
   )
 }

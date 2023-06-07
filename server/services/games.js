@@ -7,7 +7,7 @@ exports.loadGames = function (req, res) {
     //db.collection("GameCollection")
     collectionList.gameCollection
         .orderBy("rank")
-        .where('rank', '>', 0)
+        // .where('rank', '>', 0)
         .get()
         .then((querySnapshot) => {
             //   console.log(querySnapshot.docs)
@@ -63,15 +63,7 @@ exports.deleteGames = async function (req, res) {
 
 exports.addGame = function (req, res) {
     db.collection("GameCollection")
-        .add({
-            Status: req.body.Status,
-            ad_cost_rate: req.body.ad_cost_rate,
-            game_icon: req.body.game_icon,
-            game_name: req.body.game_name,
-            game_type: req.body.game_type,
-            platform: req.body.platform,
-            rank: req.body.rank,
-        })
+        .add(req.body)
         .then((docRef) => {
             // db.collection("DeveloperCollection").doc(req.params.devId).update({
             //     games: FieldValue.arrayUnion(docRef.id)

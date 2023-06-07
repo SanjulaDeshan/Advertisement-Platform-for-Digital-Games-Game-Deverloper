@@ -13,14 +13,29 @@ export default function Balance() {
   const drawingsRef = collection(db, "drawings");
 
   const [dashboard, setDashboard] = useState({});
+  const [revenue, setRevenue] = useState({});
+
+  const devId = "1qpo3PJy3826ycgCBwzv";
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/developers/dashboard").then((x) => {
-      setDashboard(x.data);
-    });
+    axios
+      .post("http://localhost:8000/api/games/revenue", {
+        dev_id: devId,
+      })
+      .then((x) => {
+        console.log(x.data);
+        setRevenue(x.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    axios.get("http://localhost:8000/api/developers/withdrawals").then((x) => {
+    // axios.get("http://localhost:8000/api/developers/withdrawals").then((x) => {
+    //   setDrawingsDetails(x.data);
+    // });
+    axios.get(`http://localhost:8000/api/developers/trans/${devId}`).then((x) => {
       setDrawingsDetails(x.data);
+      console.log(x.data);
     });
   }, []);
 
@@ -37,22 +52,22 @@ export default function Balance() {
           <div className="balance-box-raw">
             <div className="balance-box">
               <h3>Today</h3>
-              <p>$ {dashboard.todaysIncome}</p>
+              <p>$ {revenue.daily_revenue}</p>
             </div>
 
             <div className="balance-box">
-              <h3>Last 7 days</h3>
-              <p>$ {dashboard.sevenDayIncome}</p>
+              <h3>Last 7 day</h3>
+              <p>$ {revenue.weekly_revenue}</p>
             </div>
 
             <div className="balance-box">
-              <h3>Last 28 days</h3>
-              <p>$ {dashboard.monthIncome}</p>
+              <h3>Last 30 days</h3>
+              <p>$ {revenue.monthly_revenue}</p>
             </div>
 
             <div className="balance-box">
-              <h3>LIfe Time</h3>
-              <p>$ {dashboard.totalIncome}</p>
+              <h3>Total AdUnits</h3>
+              <p> {revenue.nAds}</p>
             </div>
           </div>
         </div>
@@ -70,10 +85,10 @@ export default function Balance() {
           </tr>
           {drawingsDetails.map((drawingData) => (
             <tr key={drawingData.id}>
-              <td>{drawingData.id}</td>
-              <td>{drawingData.time}</td>
-              <td>{drawingData.amount}</td>
-              {/* <td>{drawingData.current_balance}</td> */}
+              <td>{drawingData.trans_id}</td>
+              <td>{new Date(drawingData.requested_date._seconds * 1000).toLocaleString()}</td>
+              <td>{drawingData.withdrowal_amount}</td>
+              <td>{drawingData.current_balance}</td>
             </tr>
           ))}
         </table>

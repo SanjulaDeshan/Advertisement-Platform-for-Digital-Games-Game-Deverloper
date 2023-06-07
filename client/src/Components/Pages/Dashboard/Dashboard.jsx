@@ -11,11 +11,12 @@ export default function Dashboard() {
   const [ownGames, setOwnGames] = useState([]);
   const [revenue, setRevenue] = useState({});
 
-  const devId = "3yyBzU23QUwAXU2mdh51";
+  const devId = "1qpo3PJy3826ycgCBwzv";
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/games").then((x) => {
       setGameDetails(x.data);
+      console.log(x.data)
     });
 
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
@@ -24,11 +25,11 @@ export default function Dashboard() {
 
     axios
       .post("http://localhost:8000/api/games/revenue", {
-        user_id: "5hGh3aprIqo9beTOqp1U",
+        dev_id: devId,
       })
       .then((x) => {
-        console.log(x.data[0]);
-        setRevenue(x.data[0]);
+        console.log(x.data);
+        setRevenue(x.data);
       })
       .catch((err) => {
         console.log(err);
