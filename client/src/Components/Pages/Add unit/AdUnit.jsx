@@ -11,7 +11,7 @@ import SideNav from '../../Globle_component/SideNav'
 
 export default function AdUnit() {
 
-  const devId = "Mt7f3EKL7qTVVtzjoqo2";
+  const devId = "Qz1RiCIt50l1RsGT82JI";
 
   const [adUnitDetails, setAdUnitDetails] = useState([]);
   const [ownGames, setOwnGames] = useState([]);
@@ -47,7 +47,7 @@ export default function AdUnit() {
 
   const handleSubmit = e => {
     e.preventDefault()
-
+// console.log("running");
     if (
       form.AdUnit_Name === ""
     ) {

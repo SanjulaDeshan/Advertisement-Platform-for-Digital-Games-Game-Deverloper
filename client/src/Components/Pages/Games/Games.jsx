@@ -13,7 +13,7 @@ export default function Games() {
 
   const [reload, setReload] = useState(false);
 
-  const devId = "Mt7f3EKL7qTVVtzjoqo2";
+  const devId = "Qz1RiCIt50l1RsGT82JI";
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
@@ -52,24 +52,8 @@ export default function Games() {
     // addDoc(gameDataCollectionRef, form);
     axios
       .put(`http://localhost:8000/api/games/${devId}`, {
-        // ad_cost_rate: 2.5,
-        // ad_units: ["Hit22IjjmV2BrF6tiYFG", "niSBRhPkYVxTpwh9oAhI", "PFt9OEPOHXHrjam10sZT"],
-        // game_icon: "sssss",
-        // game_name: "Test Game",
-        // game_type: "oEZRAx7BGkAbZsRuLC7q",
-        // platform: "Ios",
-        // published_date: "June 3, 2023 at 6:52:18 PM UTC+5:30",
-        // rank: 19,
-        // status: "approved"
-        // ad_cost_rate: form.ad_cost_rate,
-        // ad_units: form.ad_units,
-        // game_icon: form.game_icon,
         game_name: form.game_name,
-        // game_type: form.type,
         platform: form.platform,
-        // published_date: form.published_date,
-        // rank: form.rank,
-        // status: form.status
         user_id: devId
       })
       .then((response) => {
