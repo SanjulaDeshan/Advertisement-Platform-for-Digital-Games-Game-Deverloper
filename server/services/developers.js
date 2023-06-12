@@ -62,6 +62,12 @@ exports.getadUnits = async function (req, res) {
     res.send(a);
 }
 
+exports.getDev = async function (req, res) {
+
+    const user = await collectionList.developerCollection.doc(req.params.devId).get();
+    res.send({...user.data(), id: user.id});
+}
+
 
 
 // exports.getWithdrawals = function (devId) {
