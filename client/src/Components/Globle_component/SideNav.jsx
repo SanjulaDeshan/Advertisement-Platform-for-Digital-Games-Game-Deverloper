@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import { NavLink } from 'react-router-dom';
 import './SideNav.css'; 
 
@@ -6,9 +6,7 @@ import './SideNav.css';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GamesIcon from "@mui/icons-material/Games";
 import BalanceIcon from "@mui/icons-material/Balance";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import AdUnitsIcon from "@mui/icons-material/AdUnits";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import LogOut from './LogOut';
@@ -92,13 +90,7 @@ export default function SideNav() {
             <NavLink to="/Game Deverloper/Balance" activeClassName="active"><BalanceIcon /> &nbsp; Balance</NavLink>
           </li>
           <li className="side-nav-item">
-            <NavLink to="/Game Deverloper/Monitization" activeClassName="active"><MonetizationOnIcon /> &nbsp; Monitization</NavLink>
-          </li>
-          <li className="side-nav-item">
             <NavLink exact to="/Game Deverloper/AdUnit" activeClassName="active"><AdUnitsIcon /> &nbsp; Ad Unit</NavLink>
-          </li>
-          <li className="side-nav-item">
-            <NavLink to="/Game Deverloper/GameDetails" activeClassName="active"><SportsEsportsIcon /> &nbsp; Game Details</NavLink>
           </li>
           <li className="side-nav-item">
             <NavLink to="/Game Deverloper/UserSettings" activeClassName="active"><SettingsIcon /> &nbsp; User Settings</NavLink>

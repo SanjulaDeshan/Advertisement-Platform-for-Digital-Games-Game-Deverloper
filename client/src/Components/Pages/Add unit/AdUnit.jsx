@@ -7,8 +7,6 @@ import Navbar from '../../Globle_component/Navbar'
 import SideNav from '../../Globle_component/SideNav'
 
 //Import firebase files
-import { collection, onSnapshot, doc, addDoc, deleteDoc } from "firebase/firestore";
-import { db } from "../../../firebase.config";
 
 
 export default function AdUnit() {
@@ -16,30 +14,18 @@ export default function AdUnit() {
   const devId = "Mt7f3EKL7qTVVtzjoqo2";
 
   const [adUnitDetails, setAdUnitDetails] = useState([]);
-  const adUnitCollectionRef = collection(db, "AdUnitCollection");
   const [ownGames, setOwnGames] = useState([]);
   const [adTypes, setAdTypes] = useState([]);
 
   useEffect(() => {
-    // onSnapshot(adUnitCollectionRef, (snapshot) => {
-    //   setAdUnitDetails(
-    //     snapshot.docs.map((doc) => {
-    //       return {
-    //         id: doc.id,
-    //         viewng: false,
-    //         ...doc.data(),
-    //       };
-    //     })
-    //   );
-    // });
 
     axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
       setAdUnitDetails(x.data);
-      console.log(x.data);
+      // console.log(x.data);
     });
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
       setOwnGames(x.data);
-      // console.log(x.data);
+      console.log(x.data);
     });
     axios.get(`http://localhost:8000/api/games/adtypes`).then((x) => {
       setAdTypes(x.data);
@@ -74,13 +60,11 @@ export default function AdUnit() {
     axios
       .post(`http://localhost:8000/api/games/addadunit`, { ad_unit_name: form.AdUnit_Name, ad_unit_type: form.AdUnit_Type, game_id: form.Game_Id })
       .then((res) => {
-        // console.log(res)
         axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
           setAdUnitDetails(x.data);
         })
       })
 
-    // addDoc(adUnitCollectionRef, form)
 
 
     setForm({
@@ -97,22 +81,24 @@ export default function AdUnit() {
   const removeData = (id) => {
     // deleteDoc(doc(db, "AdUnitCollection", id));
     // return;
+    // console.log(id);
 
-    setAdUnitDetails(adUnitDetails.filter((ad) => ad.id !== id));
+    // setAdUnitDetails(adUnitDetails.filter((ad) => ad.id !== id));
 
     const game = ownGames.filter((elem) => elem.ad_units.includes(id));
+    // console.log(game);
 
-    // console.log({ game_id: game[0].game_id, ad_unit_id: id });
+    console.log({ game_id: game[0].game_id, ad_unit_id: id });
 
 
-    // axios
-    //   .post(`http://localhost:8000/api/games/deleteadunit`, { game_id: game.game_id, ad_unit_id: id })
-    //   .then((res) => {
-    //     // console.log(res)
-    //     axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
-    //       setAdUnitDetails(x.data);
-    //     })
-    //   })
+    axios
+      .post(`http://localhost:8000/api/games/deleteadunit`, { game_id: game[0].game_id, ad_unit_id: id })
+      .then((res) => {
+        console.log("deleted");
+        axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+          setAdUnitDetails(x.data);
+        })
+      })
 
 
   };

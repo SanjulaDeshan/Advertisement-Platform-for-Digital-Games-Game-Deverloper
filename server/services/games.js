@@ -7,7 +7,7 @@ exports.loadGames = function (req, res) {
     //db.collection("GameCollection")
     collectionList.gameCollection
         .orderBy("rank")
-        // .where('rank', '>', 0)
+        .where('rank', '>', 0)
         .get()
         .then((querySnapshot) => {
             //   console.log(querySnapshot.docs)

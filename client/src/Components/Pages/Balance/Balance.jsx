@@ -2,17 +2,12 @@ import { React, useEffect, useState } from "react";
 import "./balance.css";
 import axios from "axios";
 
-//Import firebase files
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../../firebase.config";
 import SideNav from "../../Globle_component/SideNav";
 import Navbar from "../../Globle_component/Navbar";
 
 export default function Balance() {
   const [drawingsDetails, setDrawingsDetails] = useState([]);
-  const drawingsRef = collection(db, "drawings");
 
-  const [dashboard, setDashboard] = useState({});
   const [revenue, setRevenue] = useState({});
 
   const devId = "Mt7f3EKL7qTVVtzjoqo2";

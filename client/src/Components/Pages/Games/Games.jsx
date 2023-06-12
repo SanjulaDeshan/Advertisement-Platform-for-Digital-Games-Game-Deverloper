@@ -6,20 +6,9 @@ import axios from "axios";
 import Navbar from "../../Globle_component/Navbar";
 import SideNav from "../../Globle_component/SideNav";
 
-//Import firebase files
-import {
-  collection,
-  onSnapshot,
-  doc,
-  addDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../../../firebase.config";
 
 export default function Games() {
-  const [gameDetails, setGameDetails] = useState([]);
 
-  const gameDataCollectionRef = collection(db, "GamesCollection");
   const [ownGames, setOwnGames] = useState([]);
 
   const [reload, setReload] = useState(false);
