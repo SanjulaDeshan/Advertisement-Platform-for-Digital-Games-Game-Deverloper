@@ -5,35 +5,15 @@ import './user.css';
 import axios from "axios";
 
 //Import firebase files
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "../../../firebase.config";
 
 
 export default function UserSettings() {
 
   const devId = "Mt7f3EKL7qTVVtzjoqo2";
 
-  const [gameDeveAccountDetails, setGameDeveAccountDetails] = useState([]);
-
-  const gameDeveCreateAccountRef = collection(db, "gameDeveCreateAccount");
-
-  const q = query(gameDeveCreateAccountRef, where("ID", "==", "8CURIZM4QJNw9lwjuW5i"));
-
   const [userDetails, setUserDetails] = useState({});
 
-
   useEffect(() => {
-    // onSnapshot(q, (snapshot) => {
-    //   setGameDeveAccountDetails(
-    //     snapshot.docs.map((doc) => {
-    //       return {
-    //         id: doc.id,
-    //         viewng: false,
-    //         ...doc.data(),
-    //       };
-    //     })
-    //   );
-    // });
     axios.get(`http://localhost:8000/api/developers/details/${devId}`).then((x) => {
       setUserDetails(x.data);
       // console.log(x.data);
@@ -76,14 +56,6 @@ export default function UserSettings() {
                 <td>User Type</td>
                 <td>{userDetails.user_type}</td>
               </tr>
-            {/* <tr>
-                <td>Contact Number</td>
-                <td>{gameDeveAccountData.ContactNumber}</td>
-              </tr> */}
-            {/* <tr>
-                <td>Payment Method</td>
-                <td>{gameDeveAccountData.PaymentMethod}</td>
-              </tr> */}
           </tbody>
 
 
