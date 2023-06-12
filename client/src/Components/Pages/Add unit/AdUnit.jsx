@@ -13,9 +13,12 @@ import { db } from "../../../firebase.config";
 
 export default function AdUnit() {
 
-  const devId = "1qpo3PJy3826ycgCBwzv";
+  const devId = "Mt7f3EKL7qTVVtzjoqo2";
+
   const [adUnitDetails, setAdUnitDetails] = useState([]);
   const adUnitCollectionRef = collection(db, "AdUnitCollection");
+  const [ownGames, setOwnGames] = useState([]);
+  const [adTypes, setAdTypes] = useState([]);
 
   useEffect(() => {
     // onSnapshot(adUnitCollectionRef, (snapshot) => {
@@ -33,6 +36,14 @@ export default function AdUnit() {
     axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
       setAdUnitDetails(x.data);
       console.log(x.data);
+    });
+    axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
+      setOwnGames(x.data);
+      // console.log(x.data);
+    });
+    axios.get(`http://localhost:8000/api/games/adtypes`).then((x) => {
+      setAdTypes(x.data);
+      // console.log(x.data);
     });
   }, []);
 
@@ -52,15 +63,25 @@ export default function AdUnit() {
     e.preventDefault()
 
     if (
-      !form.AdUnit_Name ||
-      !form.AdUnit_Type ||
-      !form.Game_Id
+      form.AdUnit_Name === ""
     ) {
       alert("Please fill out all fields")
       return
     }
+    // console.log(form);
 
-    addDoc(adUnitCollectionRef, form)
+
+    axios
+      .post(`http://localhost:8000/api/games/addadunit`, { ad_unit_name: form.AdUnit_Name, ad_unit_type: form.AdUnit_Type, game_id: form.Game_Id })
+      .then((res) => {
+        // console.log(res)
+        axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+          setAdUnitDetails(x.data);
+        })
+      })
+
+    // addDoc(adUnitCollectionRef, form)
+
 
     setForm({
       AdUnit_Name: "",
@@ -74,7 +95,26 @@ export default function AdUnit() {
 
 
   const removeData = (id) => {
-    deleteDoc(doc(db, "AdUnitCollection", id));
+    // deleteDoc(doc(db, "AdUnitCollection", id));
+    // return;
+
+    setAdUnitDetails(adUnitDetails.filter((ad) => ad.id !== id));
+
+    const game = ownGames.filter((elem) => elem.ad_units.includes(id));
+
+    // console.log({ game_id: game[0].game_id, ad_unit_id: id });
+
+
+    // axios
+    //   .post(`http://localhost:8000/api/games/deleteadunit`, { game_id: game.game_id, ad_unit_id: id })
+    //   .then((res) => {
+    //     // console.log(res)
+    //     axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+    //       setAdUnitDetails(x.data);
+    //     })
+    //   })
+
+
   };
 
 
@@ -105,22 +145,50 @@ export default function AdUnit() {
               />
 
 
-              <input
+              {/* <input
                 type="text"
                 value={form.AdUnit_Type}
                 name="field2"
                 placeholder="Type of the ad unit"
                 onChange={e => setForm({ ...form, AdUnit_Type: e.target.value })}
-              />
+              /> */}
+
+              <select
+                value={form.AdUnit_Type}
+                name="field2"
+                onChange={(e) =>
+                  setForm({ ...form, AdUnit_Type: e.target.value })
+                }
+              >
+                <option value="">Type of the ad unit</option>
+                {adTypes.map((adType) => (
+                  < option value={adType.id} >{adType.ad_type}</option>
+                ))}
+              </select>
 
 
-              <input
+
+
+              <select
+                value={form.Game_Id}
+                name="field3"
+                onChange={(e) =>
+                  setForm({ ...form, Game_Id: e.target.value })
+                }
+              >
+                <option value="">Game ID</option>
+                {ownGames.map((game) => (
+                  < option value={game.game_id} >{game.game_name}</option>
+                ))}
+              </select>
+              <p>Game ID: {form.Game_Id} </p>
+              {/* <input
                 type="text"
                 value={form.Game_Id}
                 name="field3"
                 placeholder="Game ID"
                 onChange={e => setForm({ ...form, Game_Id: e.target.value })}
-              />
+              /> */}
 
 
               <input
@@ -152,6 +220,6 @@ export default function AdUnit() {
 
       </div>
 
-    </div>
+    </div >
   )
 }

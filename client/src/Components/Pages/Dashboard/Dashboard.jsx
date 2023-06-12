@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [ownGames, setOwnGames] = useState([]);
   const [revenue, setRevenue] = useState({});
 
-  const devId = "1qpo3PJy3826ycgCBwzv";
+  const devId = "Mt7f3EKL7qTVVtzjoqo2";
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/games").then((x) => {

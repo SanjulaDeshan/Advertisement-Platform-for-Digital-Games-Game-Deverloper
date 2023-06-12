@@ -24,7 +24,7 @@ export default function Games() {
 
   const [reload, setReload] = useState(false);
 
-  const devId = "1qpo3PJy3826ycgCBwzv";
+  const devId = "Mt7f3EKL7qTVVtzjoqo2";
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
@@ -39,9 +39,9 @@ export default function Games() {
     ad_cost_rate: 0,
     ad_units: ["ddd", "ddd"],
     game_icon: "dddd",
-    game_name: "ddd",
+    game_name: "",
     game_type: "ddd",
-    platform: "dddd",
+    platform: "",
     published_date: "dddd",
     rank: 0,
     status: "dd"
@@ -56,14 +56,13 @@ export default function Games() {
     //   return
     // }
 
-    if (!form.Name || !form.Owner_ID || !form.Platform) {
+    if (form.name === "" || form.platform === "") {
       alert("Please fill out all fields");
       return;
     }
-
     // addDoc(gameDataCollectionRef, form);
     axios
-      .put("http://localhost:8000/api/games/8q4GBpvMsuvRnhqYYrQl", {
+      .put(`http://localhost:8000/api/games/${devId}`, {
         // ad_cost_rate: 2.5,
         // ad_units: ["Hit22IjjmV2BrF6tiYFG", "niSBRhPkYVxTpwh9oAhI", "PFt9OEPOHXHrjam10sZT"],
         // game_icon: "sssss",
@@ -73,15 +72,16 @@ export default function Games() {
         // published_date: "June 3, 2023 at 6:52:18 PM UTC+5:30",
         // rank: 19,
         // status: "approved"
-        ad_cost_rate: form.ad_cost_rate,
-        ad_units: form.ad_units,
-        game_icon: form.game_icon,
-        game_name: form.name,
-        game_type: form.type,
+        // ad_cost_rate: form.ad_cost_rate,
+        // ad_units: form.ad_units,
+        // game_icon: form.game_icon,
+        game_name: form.game_name,
+        // game_type: form.type,
         platform: form.platform,
-        published_date: form.published_date,
-        rank: form.rank,
-        status: form.status
+        // published_date: form.published_date,
+        // rank: form.rank,
+        // status: form.status
+        user_id: devId
       })
       .then((response) => {
         setReload((x) => !x);
@@ -140,22 +140,22 @@ export default function Games() {
               {/* https://www.sanwebe.com/2014/08/css-html-forms-designs */}
 
               <form onSubmit={handleSubmit}>
-                <input
+                {/* <input
                   type="text"
                   value={form.Status}
                   name="field5"
                   placeholder="Status"
                   onChange={(e) => setForm({ ...form, Status: e.target.value })}
-                />
+                /> */}
                 <input
                   type="text"
-                  value={form.Name}
+                  value={form.game_name}
                   name="field1"
                   placeholder="Name"
                   onChange={(e) => setForm({ ...form, game_name: e.target.value })}
                 />
 
-                <input
+                {/* <input
                   type="text"
                   value={form.Owner_ID}
                   name="field2"
@@ -163,9 +163,9 @@ export default function Games() {
                   onChange={(e) =>
                     setForm({ ...form, Owner_ID: e.target.value })
                   }
-                />
+                /> */}
 
-                <input
+                {/* <input
                   type="text"
                   value={form.Platform}
                   name="field3"
@@ -173,8 +173,19 @@ export default function Games() {
                   onChange={(e) =>
                     setForm({ ...form, Platform: e.target.value })
                   }
-                />
-                <input
+                /> */}
+                <select
+                  value={form.platform}
+                  name="field3"
+                  onChange={(e) =>
+                    setForm({ ...form, platform: e.target.value })
+                  }
+                >
+                  <option value="">Platform</option>
+                  <option value="iOS">iOS</option>
+                  <option value="Android">Android</option>
+                </select>
+                {/* <input
                   type="number"
                   value={form.rank}
                   name="field4"
@@ -182,7 +193,7 @@ export default function Games() {
                   onChange={(e) =>
                     setForm({ ...form, rank: parseInt(e.target.value) })
                   }
-                />
+                /> */}
 
                 <input type="submit" value="Submit" />
               </form>

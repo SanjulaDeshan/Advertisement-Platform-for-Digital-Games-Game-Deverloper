@@ -35,6 +35,7 @@ async function addGame(req, res) {
 
 async function deleteGame(req,res) {
     const { user_id, game_id } = req.body;
+    
 
    try {
     const GameRef = await collectionList.gameCollection.doc(game_id).delete();
