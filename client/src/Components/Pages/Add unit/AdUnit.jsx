@@ -9,7 +9,7 @@ import SideNav from "../../Globle_component/SideNav";
 //Import firebase files
 
 export default function AdUnit() {
-  const devId = "Qz1RiCIt50l1RsGT82JI";
+  const devId = "o4QAcesrFl5FNFnlnamb";
 
   const [adUnitDetails, setAdUnitDetails] = useState([]);
   const [ownGames, setOwnGames] = useState([]);

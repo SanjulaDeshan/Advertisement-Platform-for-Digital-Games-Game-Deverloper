@@ -13,7 +13,7 @@ export default function Games() {
 
   const [reload, setReload] = useState(false);
 
-  const devId = "Qz1RiCIt50l1RsGT82JI";
+  const devId = "o4QAcesrFl5FNFnlnamb";
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {

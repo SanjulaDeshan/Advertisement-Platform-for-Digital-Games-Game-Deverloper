@@ -9,7 +9,7 @@ import axios from "axios";
 
 export default function UserSettings() {
 
-  const devId = "Qz1RiCIt50l1RsGT82JI";
+  const devId = "o4QAcesrFl5FNFnlnamb";
 
   const [userDetails, setUserDetails] = useState({});
 
