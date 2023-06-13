@@ -1,16 +1,14 @@
 import { React, useEffect, useState } from "react";
-import './adUnit.css'
+import "./adUnit.css";
 import axios from "axios";
 
 //Import globle component
-import Navbar from '../../Globle_component/Navbar'
-import SideNav from '../../Globle_component/SideNav'
+import Navbar from "../../Globle_component/Navbar";
+import SideNav from "../../Globle_component/SideNav";
 
 //Import firebase files
 
-
 export default function AdUnit() {
-
   const devId = "Qz1RiCIt50l1RsGT82JI";
 
   const [adUnitDetails, setAdUnitDetails] = useState([]);
@@ -18,11 +16,12 @@ export default function AdUnit() {
   const [adTypes, setAdTypes] = useState([]);
 
   useEffect(() => {
-
-    axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
-      setAdUnitDetails(x.data);
-      // console.log(x.data);
-    });
+    axios
+      .get(`http://localhost:8000/api/developers/adUnits/${devId}`)
+      .then((x) => {
+        setAdUnitDetails(x.data);
+        // console.log(x.data);
+      });
     axios.get(`http://localhost:8000/api/developers/${devId}`).then((x) => {
       setOwnGames(x.data);
       console.log(x.data);
@@ -33,8 +32,6 @@ export default function AdUnit() {
     });
   }, []);
 
-
-
   //Adding ad units via form
 
   const [popupActive, setPopupActive] = useState(false);
@@ -42,43 +39,42 @@ export default function AdUnit() {
   const [form, setForm] = useState({
     AdUnit_Name: "",
     AdUnit_Type: "",
-    Game_Id: ""
+    Game_Id: "",
   });
 
-  const handleSubmit = e => {
-    e.preventDefault()
-// console.log("running");
-    if (
-      form.AdUnit_Name === ""
-    ) {
-      alert("Please fill out all fields")
-      return
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log("running");
+    if (form.AdUnit_Name === "") {
+      alert("Please fill out all fields");
+      return;
     }
     // console.log(form);
 
-
     axios
-      .post(`http://localhost:8000/api/games/addadunit`, { ad_unit_name: form.AdUnit_Name, ad_unit_type: form.AdUnit_Type, game_id: form.Game_Id })
-      .then((res) => {
-        axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
-          setAdUnitDetails(x.data);
-        })
+      .post(`http://localhost:8000/api/games/addadunit`, {
+        ad_unit_name: form.AdUnit_Name,
+        ad_unit_type: form.AdUnit_Type,
+        game_id: form.Game_Id,
       })
-
-
+      .then((res) => {
+        axios
+          .get(`http://localhost:8000/api/developers/adUnits/${devId}`)
+          .then((x) => {
+            setAdUnitDetails(x.data);
+          });
+      });
 
     setForm({
       AdUnit_Name: "",
       AdUnit_Type: "",
-      Game_Id: ""
-    })
+      Game_Id: "",
+    });
 
-    setPopupActive(false)
-  }
+    setPopupActive(false);
+  };
 
-
-
-  const removeData = (id) => {
+  const removeData = async (id) => {
     // deleteDoc(doc(db, "AdUnitCollection", id));
     // return;
     // console.log(id);
@@ -90,48 +86,63 @@ export default function AdUnit() {
 
     console.log({ game_id: game[0].game_id, ad_unit_id: id });
 
-
     axios
-      .post(`http://localhost:8000/api/games/deleteadunit`, { game_id: game[0].game_id, ad_unit_id: id })
+      .post(`http://localhost:8000/api/games/deleteadunit`, {
+        game_id: game[0].game_id,
+        ad_unit_id: id,
+      })
       .then((res) => {
         console.log("deleted");
-        axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
-          setAdUnitDetails(x.data);
-        })
-      })
+        console.log(res.data);
+        // axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+        //   setAdUnitDetails(x.data);
+        // })
+      });
 
+    const deleteAdUnit = await axios.post(
+      `http://localhost:8000/api/games/deleteadunit`,
+      { game_id: game[0].game_id, ad_unit_id: id }
+    );
 
+    const reloadAdUnit = await axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`);
+    setAdUnitDetails(reloadAdUnit.data);
   };
 
-
   return (
-    <div className='ad-unit'>
+    <div className="ad-unit">
       <SideNav />
       <Navbar />
       <div className="ad-unit-container">
+        <div className="ad-unit-topic">
+          <h1>Ad Unit</h1>
+        </div>
 
-        <div className="ad-unit-topic"><h1>Ad Unit</h1></div>
+        <button
+          className="ad-unit-btn"
+          onClick={() => setPopupActive(!popupActive)}
+        >
+          Add Unit
+        </button>
 
-        <button className="ad-unit-btn" onClick={() => setPopupActive(!popupActive)}>Add Unit</button>
+        {popupActive && (
+          <div className="popup">
+            <div class="ad-unit-form-style">
+              <h1>Adding AdUnit</h1>
 
-        {popupActive && <div className="popup">
-          <div class="ad-unit-form-style">
-            <h1>Adding AdUnit</h1>
+              {/* https://www.sanwebe.com/2014/08/css-html-forms-designs */}
 
-            {/* https://www.sanwebe.com/2014/08/css-html-forms-designs */}
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  value={form.AdUnit_Name}
+                  name="field1"
+                  placeholder="Ad unit name"
+                  onChange={(e) =>
+                    setForm({ ...form, AdUnit_Name: e.target.value })
+                  }
+                />
 
-            <form onSubmit={handleSubmit}>
-
-              <input
-                type="text"
-                value={form.AdUnit_Name}
-                name="field1"
-                placeholder="Ad unit name"
-                onChange={e => setForm({ ...form, AdUnit_Name: e.target.value })}
-              />
-
-
-              {/* <input
+                {/* <input
                 type="text"
                 value={form.AdUnit_Type}
                 name="field2"
@@ -139,36 +150,33 @@ export default function AdUnit() {
                 onChange={e => setForm({ ...form, AdUnit_Type: e.target.value })}
               /> */}
 
-              <select
-                value={form.AdUnit_Type}
-                name="field2"
-                onChange={(e) =>
-                  setForm({ ...form, AdUnit_Type: e.target.value })
-                }
-              >
-                <option value="">Type of the ad unit</option>
-                {adTypes.map((adType) => (
-                  < option value={adType.id} >{adType.ad_type}</option>
-                ))}
-              </select>
+                <select
+                  value={form.AdUnit_Type}
+                  name="field2"
+                  onChange={(e) =>
+                    setForm({ ...form, AdUnit_Type: e.target.value })
+                  }
+                >
+                  <option value="">Type of the ad unit</option>
+                  {adTypes.map((adType) => (
+                    <option value={adType.id}>{adType.ad_type}</option>
+                  ))}
+                </select>
 
-
-
-
-              <select
-                value={form.Game_Id}
-                name="field3"
-                onChange={(e) =>
-                  setForm({ ...form, Game_Id: e.target.value })
-                }
-              >
-                <option value="">Game ID</option>
-                {ownGames.map((game) => (
-                  < option value={game.game_id} >{game.game_name}</option>
-                ))}
-              </select>
-              <p>Game ID: {form.Game_Id} </p>
-              {/* <input
+                <select
+                  value={form.Game_Id}
+                  name="field3"
+                  onChange={(e) =>
+                    setForm({ ...form, Game_Id: e.target.value })
+                  }
+                >
+                  <option value="">Game ID</option>
+                  {ownGames.map((game) => (
+                    <option value={game.game_id}>{game.game_name}</option>
+                  ))}
+                </select>
+                <p>Game ID: {form.Game_Id} </p>
+                {/* <input
                 type="text"
                 value={form.Game_Id}
                 name="field3"
@@ -176,15 +184,11 @@ export default function AdUnit() {
                 onChange={e => setForm({ ...form, Game_Id: e.target.value })}
               /> */}
 
-
-              <input
-                type="submit"
-                value="Submit"
-              />
-
-            </form>
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
           </div>
-        </div>}
+        )}
 
         <table className="ad-unit-table">
           <tr>
@@ -198,14 +202,19 @@ export default function AdUnit() {
               <td>{adUnitData.ad_unit_name}</td>
               <td>{adUnitData.ad_unit_type}</td>
               <td>{adUnitData.id}</td>
-              <td> <button className="delete-adunit" onClick={() => removeData(adUnitData.id)}>Delete</button> </td>
+              <td>
+                {" "}
+                <button
+                  className="delete-adunit"
+                  onClick={() => removeData(adUnitData.id)}
+                >
+                  Delete
+                </button>{" "}
+              </td>
             </tr>
           ))}
         </table>
-
-
       </div>
-
-    </div >
-  )
+    </div>
+  );
 }
