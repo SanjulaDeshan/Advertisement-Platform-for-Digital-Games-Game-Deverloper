@@ -75,37 +75,39 @@ export default function AdUnit() {
   };
 
   const removeData = async (id) => {
-    // deleteDoc(doc(db, "AdUnitCollection", id));
-    // return;
-    // console.log(id);
+    if (window.confirm('Do you want to delete this ?')) {
+      // deleteDoc(doc(db, "AdUnitCollection", id));
+      // return;
+      // console.log(id);
 
-    // setAdUnitDetails(adUnitDetails.filter((ad) => ad.id !== id));
+      // setAdUnitDetails(adUnitDetails.filter((ad) => ad.id !== id));
 
-    const game = ownGames.filter((elem) => elem.ad_units.includes(id));
-    // console.log(game);
+      const game = ownGames.filter((elem) => elem.ad_units.includes(id));
+      // console.log(game);
 
-    console.log({ game_id: game[0].game_id, ad_unit_id: id });
+      console.log({ game_id: game[0].game_id, ad_unit_id: id });
 
-    axios
-      .post(`http://localhost:8000/api/games/deleteadunit`, {
-        game_id: game[0].game_id,
-        ad_unit_id: id,
-      })
-      .then((res) => {
-        console.log("deleted");
-        console.log(res.data);
-        // axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
-        //   setAdUnitDetails(x.data);
-        // })
-      });
+      axios
+        .post(`http://localhost:8000/api/games/deleteadunit`, {
+          game_id: game[0].game_id,
+          ad_unit_id: id,
+        })
+        .then((res) => {
+          console.log("deleted");
+          console.log(res.data);
+          // axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`).then((x) => {
+          //   setAdUnitDetails(x.data);
+          // })
+        });
 
-    const deleteAdUnit = await axios.post(
-      `http://localhost:8000/api/games/deleteadunit`,
-      { game_id: game[0].game_id, ad_unit_id: id }
-    );
+      const deleteAdUnit = await axios.post(
+        `http://localhost:8000/api/games/deleteadunit`,
+        { game_id: game[0].game_id, ad_unit_id: id }
+      );
 
-    const reloadAdUnit = await axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`);
-    setAdUnitDetails(reloadAdUnit.data);
+      const reloadAdUnit = await axios.get(`http://localhost:8000/api/developers/adUnits/${devId}`);
+      setAdUnitDetails(reloadAdUnit.data);
+    }
   };
 
   return (

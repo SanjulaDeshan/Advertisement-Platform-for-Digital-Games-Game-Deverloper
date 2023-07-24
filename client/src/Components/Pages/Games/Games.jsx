@@ -80,13 +80,15 @@ export default function Games() {
 
   const removeData = (devId, gameId) => {
     // deleteDoc(doc(db, "GamesCollection", id));
-    axios
-      .delete(`http://localhost:8000/api/games/${devId}/${gameId}`)
-      .then(() => {
-        // console.log(reload);
-        setReload((x) => !x);
-        // console.log(reload);
-      });
+    if (window.confirm('Do you want to delete this ')) {
+      axios
+        .delete(`http://localhost:8000/api/games/${devId}/${gameId}`)
+        .then(() => {
+          // console.log(reload);
+          setReload((x) => !x);
+          // console.log(reload);
+        });
+    }
   };
 
   return (
