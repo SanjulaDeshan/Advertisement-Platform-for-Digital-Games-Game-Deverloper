@@ -57,9 +57,6 @@ export default function UserSettings() {
                 <td>{userDetails.user_type}</td>
               </tr>
           </tbody>
-
-
-
         </table>
 
       </div>
